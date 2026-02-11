@@ -1,4 +1,4 @@
-# TaskMaster - Professional To-Do App
+# TaskMaster - Smart To-Do App
 
 A modern, professional-grade To-Do application built with Node.js and Vanilla JavaScript.
 
@@ -53,3 +53,4 @@ A modern, professional-grade To-Do application built with Node.js and Vanilla Ja
 
 - **MVC-ish**: The frontend handles the View and Controller logic, while the backend acts as the Model/API layer.
 - **Clean Code**: Modular functions, optimistic UI updates for perceived performance, and separated concerns.
+
