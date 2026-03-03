@@ -1,803 +1,524 @@
-:root {
-    color-scheme: light dark;
-    /* Enables native dark scrollbars/inputs */
-    /* Color Palette - Light Mode */
-    --bg-primary: #f8fafc;
-    /* Fallback */
-    --bg-gradient: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-    /* Soft Purple to Blue */
-    --bg-secondary: rgba(255, 255, 255, 0.9);
-    /* Glassmorphism base */
-    --header-bg: rgba(255, 255, 255, 0.95);
+/* ============================================================
+   TaskMaster – Stitch SaaS Design System
+   Tailwind-first. This file handles app-specific overrides + dark mode.
+   ============================================================ */
 
-    --text-primary: #1e293b;
-    --text-secondary: #475569;
-    /* Slightly darker for better contrast on glass */
-
-    --accent-color: #6366f1;
-    /* Indigo 500 */
-    --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    /* Indigo to Violet */
-    --accent-hover: #4f46e5;
-
-    --danger-color: #ef4444;
-    --success-color: #22c55e;
-    /* Green-500 for success */
-    --warning-color: #f59e0b;
-
-    --border-color: rgba(226, 232, 240, 0.8);
-    /* Semi-transparent border */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05);
-
-    /* Consistency Variables */
-    --radius-md: 0.75rem;
-    --radius-lg: 0.75rem;
-
-    /* Spacing Units */
-    --space-xs: 0.5rem;
-    --space-sm: 0.75rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-
-    /* Priority Colors */
-    --priority-low: #3b82f6;
-    --priority-medium: #f59e0b;
-    --priority-high: #ef4444;
-
-    /* Transition */
-    --transition-speed: 0.2s;
-}
-
-[data-theme="dark"] {
-    --bg-primary: #0f172a;
-    --bg-gradient: linear-gradient(to bottom right, #0f172a, #1e293b);
-    /* Deep Slate Gradient */
-    --bg-secondary: rgba(30, 41, 59, 0.95);
-    /* Slate 800 with slight transparency */
-    --header-bg: rgba(30, 41, 59, 0.95);
-
-    --text-primary: #f8fafc;
-    /* Slate 50 */
-    --text-secondary: #cbd5e1;
-    /* Slate 300 */
-
-    --accent-color: #818cf8;
-    --accent-gradient: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
-
-    --border-color: rgba(51, 65, 85, 0.8);
-    /* Slate 700 */
-
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: var(--bg-gradient);
-    /* Gradient Background */
-    background-attachment: fixed;
-    /* Keeps gradient fast during scroll */
-    color: var(--text-primary);
-    line-height: 1.5;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    overflow-y: scroll;
-}
-
-/* App Container */
-.app-container {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-/* Header */
-.app-header {
-    background-color: var(--header-bg);
-    backdrop-filter: blur(12px);
-    /* Glassmorphism */
-    -webkit-backdrop-filter: blur(12px);
-    padding: 1.5rem;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    /* Deeper shadow for pop */
-    border: 1px solid var(--border-color);
-}
-
-.header-top {
-    display: flex;
-    justify-content: space-between;
+/* ---- Priority badges (set dynamically by app.js) ---- */
+.badge {
+    display: inline-flex;
     align-items: center;
-    margin-bottom: 1rem;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: var(--accent-color);
-}
-
-.logo h1 {
-    font-size: 1.5rem;
+    padding: 2px 10px;
+    border-radius: 9999px;
+    font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: -0.025em;
-    color: var(--text-primary);
+    letter-spacing: 0.04em;
+    text-transform: capitalize;
 }
 
-.icon-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--text-secondary);
-    padding: 0.5rem;
-    border-radius: var(--radius-md);
-    transition: all var(--transition-speed);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.badge.high,
+.badge.priority-high {
+    background: #fef2f2;
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-.icon-btn:hover {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+.badge.medium,
+.badge.priority-medium {
+    background: #fffbeb;
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
-/* Progress Bar */
-.progress-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.badge.low,
+.badge.priority-low {
+    background: #f0fdf4;
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-.progress-text {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-secondary);
+/* ---- Task status color stripes ---- */
+.task-item .task-status-indicator {
+    background-color: #0ea5e9;
+    /* active = sky blue */
 }
 
-.progress-bar-bg {
-    height: 0.5rem;
-    background-color: var(--bg-primary);
-    border-radius: 999px;
-    overflow: hidden;
+.task-item.completed .task-status-indicator {
+    background-color: #10b981;
+    /* green */
 }
 
-.progress-bar-fill {
-    height: 100%;
-    background-color: var(--accent-color);
-    border-radius: 999px;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+.task-item.failed .task-status-indicator {
+    background-color: #ef4444;
+    /* red */
 }
 
-/* Input Group */
-.input-group {
-    background-color: var(--bg-secondary);
-    padding: var(--space-md);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-}
-
-#task-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    transition: border-color var(--transition-speed);
-    font-family: inherit;
-}
-
-#task-input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
-.input-error {
-    border-color: var(--danger-color) !important;
-    animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
-}
-
-@keyframes shake {
-
-    10%,
-    90% {
-        transform: translate3d(-1px, 0, 0);
-    }
-
-    20%,
-    80% {
-        transform: translate3d(2px, 0, 0);
-    }
-
-    30%,
-    50%,
-    70% {
-        transform: translate3d(-4px, 0, 0);
-    }
-
-    40%,
-    60% {
-        transform: translate3d(4px, 0, 0);
-    }
-}
-
-#nlp-preview {
-    font-size: 0.875rem;
-    color: var(--accent-color);
-    background-color: rgba(99, 102, 241, 0.1);
-    padding: 0.5rem;
-    border-radius: var(--radius-md);
-    margin-top: -0.5rem;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    animation: slideIn 0.2s ease-out;
-}
-
-.input-controls {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-}
-
-.input-controls select,
-.input-controls input[type="datetime-local"] {
-    padding: var(--space-xs) var(--space-sm);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    background-color: var(--bg-primary);
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-family: inherit;
-    cursor: pointer;
-    height: 40px;
-    /* Enforced consistency */
-}
-
-/* Enhanced Date Picker Visibility */
-.input-controls input[type="datetime-local"] {
-    min-width: 160px;
-    color: var(--text-primary);
-    /* Higher contrast */
-    font-weight: 500;
-}
-
-/* Make the calendar icon distinct */
-.input-controls input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-    opacity: 0.6;
-    transition: 0.2s;
-    /* In dark mode, we might need to invert it if it's black by default.
-       Usually browser handles color-scheme, but we can force it. */
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%236366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.input-controls input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-/* Failed Task Styling */
-.task-item.failed {
-    border-color: var(--danger-color);
-    background-color: rgba(239, 68, 68, 0.05);
-    /* Light red tint */
+/* ---- Completed task title strikethrough ---- */
+.task-item.completed .task-title {
+    text-decoration: line-through;
+    color: #94a3b8;
 }
 
 .task-item.failed .task-title {
-    color: var(--danger-color);
+    color: #94a3b8;
+    opacity: 0.7;
 }
 
-.task-item.failed .task-due-date {
-    color: var(--danger-color);
-    font-weight: 600;
-}
+/* ============================================================
+   CHECKBOX STATES
+   ============================================================ */
 
-.input-controls select:focus,
-.input-controls input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-}
-
-#add-btn {
-    margin-left: auto;
-    background: var(--accent-gradient);
-    /* Gradient Button */
-    color: white;
-    padding: 0 var(--space-lg);
-    font-weight: 600;
-    border-radius: var(--radius-md);
-    height: 40px;
-    /* Enforced consistency */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    /* Add gap between icon and text */
-    border: none;
-    box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
-    transition: all var(--transition-speed);
-}
-
-#add-btn:hover {
-    background-color: var(--accent-hover);
-    color: white;
-    transform: translateY(-1px);
-}
-
-#add-btn:active {
-    transform: translateY(0);
-}
-
-/* Filters & Sorting */
-.filters {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.filter-tabs {
-    display: flex;
-    background-color: var(--bg-secondary);
-    padding: 0.25rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-}
-
-.filter-btn {
-    background: transparent;
-    border: none;
-    padding: 0.375rem 0.75rem;
-    border-radius: calc(var(--radius-md) - 2px);
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all var(--transition-speed);
-}
-
-.filter-btn.active {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    box-shadow: var(--shadow-sm);
-    font-weight: 600;
-}
-
-.sort-select select {
-    background-color: transparent;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    font-family: inherit;
-}
-
-.sort-select select:focus {
-    outline: none;
-    color: var(--text-primary);
-}
-
-/* Task List */
-.task-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.task-item {
-    background-color: var(--bg-secondary);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-    /* Increased padding */
-    display: flex;
-    align-items: center;
-    /* Center checkbox vertically */
-    gap: var(--space-md);
-    transition: all var(--transition-speed);
-    box-shadow: var(--shadow-sm);
-    position: relative;
-    overflow: hidden;
-    animation: slideIn 0.3s ease-out forwards;
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.task-item:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
-    border-color: var(--accent-color);
-}
-
-.task-item.completed {
-    opacity: 0.85;
-    /* Less transparent to keep color visible */
-    background-color: rgba(255, 255, 255, 0.5);
-    /* Lighter on completed */
-}
-
-.task-item.completed .task-title {
-    text-decoration: line-through;
-    color: var(--text-secondary);
-}
-
-[data-theme="dark"] .task-item.completed {
-    background-color: rgba(15, 23, 42, 0.6);
-}
-
-/* Checkbox */
-.custom-checkbox {
-    position: relative;
-    cursor: pointer;
-    user-select: none;
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-    margin-top: 0;
-    /* Removed margin-top adjustment as we are now centering */
-}
-
-.custom-checkbox input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-
+/* Default (unchecked) */
 .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 24px;
-    width: 24px;
-    background-color: var(--bg-primary);
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    /* Slightly softer than 6px for 24px box */
-    transition: all var(--transition-speed);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #cbd5e1;
+    color: transparent;
+    flex-shrink: 0;
+    transition: all 0.18s ease;
+    cursor: pointer;
 }
 
 .custom-checkbox:hover .checkmark {
-    border-color: var(--accent-color);
-    background-color: rgba(99, 102, 241, 0.1);
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
 }
 
-.custom-checkbox input:checked~.checkmark {
-    background-color: var(--success-color);
-    /* GREEN on success */
-    border-color: var(--success-color);
-    box-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
+/* Completed = green tick */
+.task-checkbox:checked+.checkmark,
+.task-item.completed .checkmark {
+    background: #10b981 !important;
+    border-color: #10b981 !important;
+    color: white !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
 
-.checkmark svg {
-    transform: scale(0);
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* Failed = red tick (class added by app.js) */
+.task-item.failed .checkmark {
+    background: #ef4444 !important;
+    border-color: #ef4444 !important;
+    color: white !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
 }
 
-.custom-checkbox input:checked~.checkmark svg {
-    transform: scale(1);
+/* ---- Filter buttons: active state override ---- */
+.filter-btn.active {
+    background: #4f46e5 !important;
+    color: white !important;
+    border-color: transparent !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
 }
 
-/* Task Content */
-.task-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    min-width: 0;
-    /* Important for text-overflow to work */
-    justify-content: center;
-    /* Ensure content stays centered if it's shorter than checkbox/actions */
+/* ---- Due date: overdue ---- */
+.task-due-date.overdue {
+    color: #ef4444;
 }
 
-.task-title {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-primary);
-    outline: none;
-    word-break: break-word;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+/* ---- Reminder button: active ---- */
+.reminder-btn.active {
+    color: #f59e0b !important;
+    background: #fffbeb;
 }
 
-.task-title:focus {
-    background-color: var(--bg-primary);
-    padding: 0 0.25rem;
+/* ---- Task: failed (overdue) ---- */
+.task-item.failed {
+    opacity: 0.8;
 }
 
-.task-meta {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    flex-wrap: wrap;
-}
-
-.badge {
-    padding: 0.125rem 0.5rem;
-    border-radius: 999px;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.65rem;
-    letter-spacing: 0.05em;
-}
-
-.badge.low {
-    background-color: rgba(59, 130, 246, 0.1);
-    color: var(--priority-low);
-}
-
-.badge.medium {
-    background-color: rgba(245, 158, 11, 0.1);
-    color: var(--priority-medium);
-}
-
-.badge.high {
-    background-color: rgba(239, 68, 68, 0.1);
-    color: var(--priority-high);
-}
-
-.task-due-date {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.task-actions {
-    display: flex;
-    gap: 0.25rem;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.task-item:hover .task-actions {
+.task-item.failed:hover {
     opacity: 1;
 }
 
-.task-actions .icon-btn:hover {
-    color: var(--danger-color);
-    background-color: rgba(239, 68, 68, 0.1);
-}
-
-.reminder-btn.active {
-    color: var(--accent-color);
-    background-color: rgba(99, 102, 241, 0.1);
-}
-
-.reminder-btn.active:hover {
-    color: var(--accent-hover);
-    background-color: rgba(99, 102, 241, 0.2);
-}
-
-/* Empty State */
-.empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem 1rem;
-    color: var(--text-secondary);
-    gap: 1rem;
-    text-align: center;
-}
-
-.empty-state p {
-    font-size: 1rem;
-}
-
-/* Clear Completed Button */
-footer {
-    display: flex;
-    justify-content: center;
-}
-
-.text-btn {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    cursor: pointer;
-    text-decoration: underline;
-    text-decoration-color: transparent;
-    transition: all 0.2s;
-}
-
-.text-btn:hover {
-    color: var(--text-primary);
-    text-decoration-color: var(--text-primary);
-}
-
-/* Toast Notification */
+/* ---- Toast Notifications ---- */
 #toast-container {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    z-index: 1000;
+    pointer-events: none;
 }
 
 .toast {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    padding: 1rem 1.5rem;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    border-left: 4px solid var(--accent-color);
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1e293b;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    animation: toastIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    pointer-events: all;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    animation: toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    min-width: 300px;
+    gap: 10px;
+    max-width: 320px;
+    min-width: 240px;
+    font-family: 'Inter', sans-serif;
 }
 
-@keyframes toastSlideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
+.toast.success {
+    border-left: 4px solid #10b981;
+}
 
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+.toast.error {
+    border-left: 4px solid #ef4444;
+}
+
+.toast.info {
+    border-left: 4px solid #4f46e5;
+}
+
+.toast.warning {
+    border-left: 4px solid #f59e0b;
 }
 
 .toast button {
     margin-left: auto;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #4f46e5;
     background: none;
     border: none;
-    color: var(--accent-color);
-    font-weight: 600;
     cursor: pointer;
-    font-size: 0.875rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
 }
 
-/* Confetti Canvas */
+.toast button:hover {
+    background: #eef2ff;
+}
+
+.toast.fade-out {
+    animation: toastOut 0.3s ease forwards;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes toastOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+/* ---- NLP Feedback ---- */
+#nlp-preview {
+    align-items: center;
+    gap: 6px;
+}
+
+#nlp-preview[style*="flex"] {
+    display: flex !important;
+}
+
+/* ---- Input error state ---- */
+.input-error {
+    outline: 2px solid #ef4444 !important;
+    outline-offset: 2px;
+}
+
+/* ---- Icon buttons ---- */
+.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    line-height: 1;
+}
+
+/* ---- Calendar btn (added dynamically by app.js) ---- */
+.calendar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: #94a3b8;
+    transition: all 0.15s ease;
+}
+
+.calendar-btn:hover {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+/* ---- Sidebar stat counters ---- */
+#stat-total,
+#stat-active,
+#stat-completed,
+#stat-failed {
+    transition: all 0.3s ease;
+}
+
+/* ---- Responsive: collapse sidebar ---- */
+@media (max-width: 1024px) {
+    aside {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    aside {
+        display: flex;
+    }
+}
+
+/* ---- Selection ---- */
+::selection {
+    background: rgba(79, 70, 229, 0.2);
+    color: #1e293b;
+}
+
+/* ---- Confetti canvas ---- */
 #confetti-canvas {
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: 9999;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 640px) {
-    .app-container {
-        margin: 0;
-        max-width: 100%;
-        padding: 0 var(--space-md);
-    }
+/* ============================================================
+   DARK MODE  (applied via .dark class on <html>)
+   ============================================================ */
 
-    /* Input Group - Mobile */
-    .input-controls {
-        flex-wrap: wrap;
-        gap: var(--space-sm);
-    }
+/* Base */
+.dark body {
+    background-color: #0d0d1a !important;
+    color: #e2e8f0 !important;
+}
 
-    .priority-selector,
-    .input-controls input[type="datetime-local"] {
-        flex: 1 1 auto;
-        /* Allow growing but not shrinking below content */
-        min-width: 120px;
-    }
+/* White cards → dark slate */
+.dark .bg-white {
+    background-color: #1a1830 !important;
+}
 
-    .input-controls select,
-    .input-controls input[type="datetime-local"] {
-        width: 100%;
-        /* Ensure full width in flex item */
-    }
+.dark .bg-background-light {
+    background-color: #0d0d1a !important;
+}
 
-    #add-btn {
-        width: 100%;
-        justify-content: center;
-        margin-top: var(--space-xs);
-    }
+/* Text */
+.dark .text-slate-900 {
+    color: #f1f5f9 !important;
+}
 
-    /* Filters - Mobile */
-    .filters {
-        flex-direction: column;
-        align-items: stretch;
-        gap: var(--space-md);
-    }
+.dark .text-slate-800 {
+    color: #e2e8f0 !important;
+}
 
-    .filter-tabs {
-        width: 100%;
-        overflow-x: auto;
-        /* Allow scroll if needed on very small screens */
-    }
+.dark .text-slate-700 {
+    color: #cbd5e1 !important;
+}
 
-    .filter-btn {
-        flex: 1;
-        text-align: center;
-        white-space: nowrap;
-    }
+.dark .text-slate-600 {
+    color: #94a3b8 !important;
+}
 
-    .sort-select {
-        align-self: flex-start;
-        /* Align left alongside filters */
-        width: 100%;
-    }
+.dark .text-slate-500 {
+    color: #6b7280 !important;
+}
 
-    .sort-select select {
-        width: 100%;
-        padding: var(--space-xs);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-    }
+.dark .text-slate-400 {
+    color: #64748b !important;
+}
 
-    /* Task Item - Mobile */
-    .task-item {
-        padding: var(--space-md);
-        /* Slightly less padding on mobile */
-        gap: var(--space-sm);
-    }
+/* Borders */
+.dark .border-slate-100 {
+    border-color: rgba(255, 255, 255, 0.07) !important;
+}
 
-    .task-actions {
-        opacity: 1;
-        /* Always show actions on mobile since no hover */
-    }
+.dark .border-slate-200 {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
 
-    /* Toast - Mobile */
-    .toast {
-        min-width: auto;
-        width: calc(100% - 2rem);
-        right: 1rem;
-        bottom: 1rem;
-    }
+.dark .ring-slate-100 {
+    --tw-ring-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+/* Inputs & controls */
+.dark input[type="text"],
+.dark input[type="datetime-local"],
+.dark select {
+    color: #e2e8f0 !important;
+    background: transparent !important;
+}
+
+.dark input::placeholder {
+    color: #4b5563 !important;
+}
+
+/* Priority selector & date row pills */
+.dark .bg-slate-50 {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark .bg-indigo-50 {
+    background-color: rgba(99, 102, 241, 0.15) !important;
+}
+
+.dark .bg-sky-50 {
+    background-color: rgba(14, 165, 233, 0.12) !important;
+}
+
+.dark .bg-emerald-50 {
+    background-color: rgba(16, 185, 129, 0.12) !important;
+}
+
+.dark .bg-red-50 {
+    background-color: rgba(239, 68, 68, 0.12) !important;
+}
+
+.dark .bg-amber-50 {
+    background-color: rgba(245, 158, 11, 0.12) !important;
+}
+
+/* Task cards */
+.dark .task-item {
+    background-color: #1a1830 !important;
+    border-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+.dark .task-item:hover {
+    background-color: #221f3d !important;
+}
+
+/* Task title */
+.dark .task-title {
+    color: #f1f5f9 !important;
+}
+
+.dark .task-item.completed .task-title {
+    color: #475569 !important;
+}
+
+.dark .task-item.failed .task-title {
+    color: #475569 !important;
+}
+
+/* Checkmark border in dark */
+.dark .checkmark {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Badge dark overrides */
+.dark .badge.high,
+.dark .badge.priority-high {
+    background: rgba(239, 68, 68, 0.15) !important;
+}
+
+.dark .badge.medium,
+.dark .badge.priority-medium {
+    background: rgba(245, 158, 11, 0.15) !important;
+}
+
+.dark .badge.low,
+.dark .badge.priority-low {
+    background: rgba(16, 185, 129, 0.15) !important;
+}
+
+/* Due date text */
+.dark .task-due-date {
+    color: #64748b !important;
+}
+
+/* Filter buttons dark */
+.dark .filter-btn {
+    background-color: #1a1830 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #94a3b8 !important;
+}
+
+.dark .filter-btn:hover {
+    background-color: #221f3d !important;
+    color: #e2e8f0 !important;
+}
+
+.dark .filter-btn.active {
+    background: #4f46e5 !important;
+    color: white !important;
+}
+
+/* Sort select */
+.dark .sort-select-container,
+.dark select {
+    background: #1a1830 !important;
+    color: #94a3b8 !important;
+}
+
+/* Sidebar cards */
+.dark aside .bg-white {
+    background-color: #1a1830 !important;
+    border-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+/* Sidebar stat colors stay vibrant - good on dark */
+.dark #stat-total {
+    color: #818cf8 !important;
+}
+
+.dark #stat-active {
+    color: #38bdf8 !important;
+}
+
+.dark #stat-completed {
+    color: #34d399 !important;
+}
+
+.dark #stat-failed {
+    color: #f87171 !important;
+}
+
+/* Clear completed button */
+.dark #clear-completed {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #64748b !important;
+}
+
+/* Toast dark */
+.dark .toast {
+    background: #1a1830 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #e2e8f0 !important;
+}
+
+/* Calendar btn dark */
+.dark .calendar-btn {
+    color: #64748b;
+}
+
+.dark .calendar-btn:hover {
+    background: rgba(99, 102, 241, 0.15);
+    color: #818cf8;
+}
+
+/* Reminder active dark */
+.dark .reminder-btn.active {
+    background: rgba(245, 158, 11, 0.15) !important;
+}
+
+/* Select option dark fix */
+.dark select option {
+    background: #1a1830;
+    color: #e2e8f0;
 }

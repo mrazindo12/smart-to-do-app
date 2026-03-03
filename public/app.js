@@ -8,7 +8,7 @@ const state = {
     tasks: [],
     filter: 'all', // all, active, completed
     sortBy: 'createdAt-desc', // createdAt-desc, createdAt-asc, priority-desc, dueDate-asc
-    darkMode: localStorage.getItem('theme') === 'dark'
+    darkMode: localStorage.getItem('theme') !== 'light'  // default: dark mode
 };
 
 // --- DOM Elements ---
@@ -194,6 +194,7 @@ function renderTasks() {
 
         item.dataset.id = task.id;
         if (task.completed) item.classList.add('completed');
+        if (isFailed) item.classList.add('failed');
 
         checkbox.checked = task.completed;
         checkbox.addEventListener('change', () => {
@@ -304,10 +305,23 @@ function sortTasks(tasks) {
 function updateProgress() {
     const total = state.tasks.length;
     const completed = state.tasks.filter(t => t.completed).length;
+    const now = new Date();
+    const failed = state.tasks.filter(t => !t.completed && (t.dueAt || t.dueDate) && new Date(t.dueAt || t.dueDate) < now).length;
+    const active = total - completed - failed;
     const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
 
     elements.progressBar.style.width = `${percent}%`;
     elements.progressStats.textContent = `${completed}/${total}`;
+
+    // Update sidebar stats
+    const statTotal = document.getElementById('stat-total');
+    const statActive = document.getElementById('stat-active');
+    const statCompleted = document.getElementById('stat-completed');
+    const statFailed = document.getElementById('stat-failed');
+    if (statTotal) statTotal.textContent = total;
+    if (statActive) statActive.textContent = Math.max(0, active);
+    if (statCompleted) statCompleted.textContent = completed;
+    if (statFailed) statFailed.textContent = failed;
 
     const messages = [
         "Let's get to work!",
@@ -316,13 +330,11 @@ function updateProgress() {
         "Almost there!",
         "You're a productivity machine!"
     ];
-    // Simple logic for message
     let msgIndex = 0;
     if (percent > 0) msgIndex = 1;
     if (percent > 30) msgIndex = 2;
     if (percent > 70) msgIndex = 3;
     if (percent === 100) msgIndex = 4;
-
     if (total === 0) msgIndex = 0;
 
     elements.progressMessage.textContent = messages[msgIndex];
@@ -503,13 +515,15 @@ function toggleTheme() {
 
 function applyTheme() {
     if (state.darkMode) {
+        document.documentElement.classList.add('dark');
         document.documentElement.setAttribute('data-theme', 'dark');
-        elements.moonIcon.style.display = 'block';
-        elements.sunIcon.style.display = 'none';
+        if (elements.moonIcon) elements.moonIcon.style.display = 'block';
+        if (elements.sunIcon) elements.sunIcon.style.display = 'none';
     } else {
-        document.documentElement.removeAttribute('data-theme');
-        elements.moonIcon.style.display = 'none';
-        elements.sunIcon.style.display = 'block';
+        document.documentElement.classList.remove('dark');
+        document.documentElement.setAttribute('data-theme', 'light');
+        if (elements.moonIcon) elements.moonIcon.style.display = 'none';
+        if (elements.sunIcon) elements.sunIcon.style.display = 'block';
     }
 }
 
